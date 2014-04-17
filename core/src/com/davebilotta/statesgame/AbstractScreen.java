@@ -42,8 +42,6 @@ public class AbstractScreen implements Screen {
 	@Override
 	public void show() {
 
-		Utils.log("show method");
-		
 		 w = Gdx.graphics.getWidth();
 	     h = Gdx.graphics.getHeight();
 		
@@ -96,10 +94,12 @@ public class AbstractScreen implements Screen {
 		String[] buttons = {"States","Capitals","State Facts"};
 
 		// now position on screen
-		int bTotal = (3 * buttonH) + (2 * buttonSpacer);   // total space the buttons take up
+		int bTotal = (4 * buttonH) + (2 * buttonSpacer);   // total space the buttons take up
 		int startY = (h - bTotal)/2;		
 		int yPos = startY;
-		int xPos = w - (int)(buttonW * 1.25);
+		//int xPos = w - (int)(buttonW * 1.5);
+		
+		int xPos = 512 + (w - 512 - buttonW)/2;
 
 		// 512w x 317h
 		for (int i = 0; i < buttons.length; i++) {
