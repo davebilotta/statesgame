@@ -22,15 +22,15 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public class StatesGame extends Game {
 	public static final boolean DEBUG = true;
 	SpriteBatch batch;
-	Texture bkg;
 	static State[] states;
 	GameController controller;
 	private Stage stage;
 	private OrthographicCamera camera;
+	private QuestionType questionType;
 	
-	// move this to renderer
-	BitmapFont font;
-
+	static BitmapFont font;
+	static Texture bkg;
+	
 	public enum QuestionType {
 		STATELEVEL, CAPITALLEVEL, FACTSLEVEL
 	}
@@ -38,8 +38,17 @@ public class StatesGame extends Game {
 	@Override
 	public void create() {
 		State.initStates();
+		
+		FileHandle fontFile = Gdx.files.internal("generic-medium-webfont.ttf");
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
 
-		setScreen(new MainMenu());
+		font = generator.generateFont(24);
+		font.setColor(1f, 1f, 1f, 1);
+		generator.dispose();
+		
+		bkg = new Texture("chalkboard.jpg");
+		
+		setScreen(new MainMenuScreen(this));
 	}		
 
 

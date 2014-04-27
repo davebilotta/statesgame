@@ -7,4 +7,10 @@ public class Utils {
 			System.out.println(message);
 		}
 	}
+	
+	public static void log (int message) {
+		if (StatesGame.DEBUG) {
+			System.out.println(message);
+		}
+	}
 }

@@ -1,5 +1,7 @@
 package com.davebilotta.statesgame;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
+
 public class State {
 
 	private String id; // ie: MA (must be unique)
