@@ -95,7 +95,8 @@ public class LevelScreen extends AbstractScreen {
 				//button.
 				
 				if (nm == correctAnswer)	{
-					Utils.log("CORRECT!");				
+					Utils.log("CORRECT!");			
+					correct = true;
 				}
 				else {
 					Utils.log("INCORRECT");
