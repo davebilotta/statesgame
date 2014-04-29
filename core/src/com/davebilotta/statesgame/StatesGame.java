@@ -42,8 +42,8 @@ public class StatesGame extends Game {
 		FileHandle fontFile = Gdx.files.internal("generic-medium-webfont.ttf");
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
 
-		font = generator.generateFont(24);
-		font.setColor(1f, 1f, 1f, 1);
+		font = generator.generateFont(30);
+		//font.setColor(1f, 1f, 1f, 1);
 		generator.dispose();
 		
 		bkg = new Texture("chalkboard.jpg");

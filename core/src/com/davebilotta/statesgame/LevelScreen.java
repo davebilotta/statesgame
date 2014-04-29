@@ -49,9 +49,9 @@ public class LevelScreen extends AbstractScreen {
 	public void buildButtons() {
 		TextButton button;
 		
-		TextButtonStyle style = new TextButtonStyle();
-		style.font = StatesGame.font;
-		style.fontColor = Color.WHITE;
+		//TextButtonStyle style = new TextButtonStyle();
+		//style.font = StatesGame.font;
+		//style.fontColor = Color.GREEN;
 		
 		//buttons = this.question.choices;
 		if (this.question.questionType == QuestionType.CAPITALLEVEL) {
@@ -84,7 +84,10 @@ public class LevelScreen extends AbstractScreen {
 		
 		yPos = startY + ( ((i + 1) * buttonH) + (i * buttonSpacer) ); 
 		button.setPosition(xPos, yPos);
+		final LevelScreen scr = this;
 		
+		final StatesGame gm = this.game;
+		final QuestionType tp  = this.question.questionType;
 		// add listener
 		button.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -97,6 +100,7 @@ public class LevelScreen extends AbstractScreen {
 				if (nm == correctAnswer)	{
 					Utils.log("CORRECT!");			
 					correct = true;
+					transitionOut(new LevelScreen(gm,tp));
 				}
 				else {
 					Utils.log("INCORRECT");

@@ -3,6 +3,7 @@ package com.davebilotta.statesgame;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.davebilotta.statesgame.StatesGame.QuestionType;
@@ -24,9 +25,10 @@ public class MainMenuScreen extends AbstractScreen {
 	
 	public void buildButtons() {
 		TextButton button;
-		TextButtonStyle style = new TextButtonStyle();
-		style.font = StatesGame.font;
-		style.fontColor = Color.WHITE;
+		//TextButtonStyle style = new TextButtonStyle();
+		//style.font = StatesGame.font;
+		//style.fontColor = Color.WHITE;
+		//style.fontColor= Color.RED;
 		
 		//buttons = new String[] {"State Facts", "Capitals", "States"};
 		buttons = new String[] {"Capitals", "States"};
@@ -55,9 +57,34 @@ public class MainMenuScreen extends AbstractScreen {
 		button.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				String nm = event.getListenerActor().getName();
-				if (nm == "States")	game.setScreen(new LevelScreen(game,QuestionType.STATELEVEL));
-				if (nm == "Capitals") game.setScreen(new LevelScreen(game,QuestionType.CAPITALLEVEL));
-				if (nm == "State Facts") game.setScreen(new LevelScreen(game,QuestionType.FACTSLEVEL));
+				
+				//transitionOut();
+				
+				if (nm == "States")	{
+					
+					transitionOut(new LevelScreen(game,QuestionType.STATELEVEL));
+				}
+				if (nm == "Capitals") {
+					transitionOut(new LevelScreen(game,QuestionType.CAPITALLEVEL));
+				}
+					//transitionOut = false;
+					//correct = true;
+					// TODO: Need to add a delay here
+					//game.setScreen(new LevelScreen(game,QuestionType.CAPITALLEVEL));
+					
+					/*stage.getActors().get(0).addAction(Actions.sequence(Actions.fadeOut(2), Actions.run(new Runnable() {
+					    public void run () {
+					        System.out.println("Action complete!");
+					    }
+					}))); */
+					//transitionOut();
+					
+					//game.setScreen(new LevelScreen(game,QuestionType.CAPITALLEVEL));
+					
+					
+				if (nm == "State Facts") {
+					transitionOut(new LevelScreen(game,QuestionType.FACTSLEVEL));
+				}
 				
 				return true;
 			}});

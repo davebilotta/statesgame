@@ -24,6 +24,7 @@ public class Question {
 		
 		switch (questionType) {
 			case STATELEVEL:
+				// TODO: This is the same as buildCapitalChoices
 				buildStateChoices();
 				break;
 			case CAPITALLEVEL:
@@ -106,6 +107,8 @@ public class Question {
 		System.out.println("And the correct answer is " + a + " (" + choices[a] + ")");
 		
 	}
+	
+	// TODO: Consolidate this
 
 	public void buildCapitalChoices() {
 		// add answer into list of choices

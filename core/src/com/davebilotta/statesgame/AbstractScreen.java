@@ -1,30 +1,19 @@
 package com.davebilotta.statesgame;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.davebilotta.statesgame.StatesGame.QuestionType;
 
 public class AbstractScreen implements Screen {
 
@@ -41,18 +30,20 @@ public class AbstractScreen implements Screen {
 	String topText;
 	boolean correct = false;
 	boolean transitionOut = false;
-	float transitionSpeed = 1.25f;
+	float transitionSpeed = 0.75f;
 
 	public AbstractScreen(StatesGame game) {
 		this.game = game;
 
 		this.style = new TextButtonStyle();
-		style.font = StatesGame.font;
-		style.fontColor = Color.WHITE;
-
 		this.labelStyle = new LabelStyle();
+		
+		style.font = StatesGame.font;
+		Color color = new Color(255,0,0, transitionSpeed);
+		style.fontColor = Color.ORANGE;
+		
 		labelStyle.font = StatesGame.font;
-		labelStyle.fontColor = Color.ORANGE;
+		labelStyle.fontColor = Color.WHITE;
 
 		buttonW = 100;
 		buttonH = 50;
@@ -93,11 +84,14 @@ public class AbstractScreen implements Screen {
 	public void buildTopText() {
 		Label topText = new Label(this.topText, labelStyle);
 		// TODO: Fix this
-		int textHeight = 30;
+		int textHeight = 40;
 		int leftOffset = 10;
 
-		topText.setPosition(leftOffset, (h - textHeight));
+		//topText.setPosition(leftOffset, (h - textHeight));
+		//topText.setPosition(300,(h-textHeight));
 		topText.setBounds(leftOffset, (h - textHeight), w, textHeight);
+		topText.setAlignment(1);
+		
 		topText.setWrap(true);
 
 		topText.setName("topText");
@@ -130,24 +124,47 @@ public class AbstractScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-		if (correct) {
-			Array<Actor> actors = stage.getActors();
-			Actor a;
-			if (!transitionOut) {
-				for (int i = 0; i < actors.size; i++) {
-					a = actors.get(i);
-					// Don't transition background
-					if(a.getName() != "background") {
-						a.addAction(Actions.moveTo(a.getX() - 2000, a.getY(), transitionSpeed));
-					}
-				}
-				transitionOut = true;
-
-			}
-		}
-
 		stage.act();
 		stage.draw();
+	}
+
+	public void transitionOut(final LevelScreen screen) {
+		
+		Array<Actor> actors = stage.getActors();
+		Actor a;
+		
+		
+		final int s = actors.size - 1;
+		if (!transitionOut) {
+			for (int i = 0; i < actors.size; i++) {
+				a = actors.get(i);
+				final int j = i;
+		
+				// These shouldn't be here, only b/c we need a's x and Y position
+				Action fadeOut = Actions.fadeOut(.5f);
+				Action slideLeft = Actions.moveTo((0 - 2000), a.getY(),transitionSpeed);
+				Action slideDown = Actions.moveTo(a.getX(),(0-1000),transitionSpeed);
+						
+				// Don't transition background
+				if(a.getName() != "background") {
+					//a.addAction(Actions.sequence(Actions.moveTo(0 - 2000, a.getY(), transitionSpeed), Actions.run(new Runnable() {
+					a.addAction(Actions.sequence(slideDown, Actions.run(new Runnable() {
+						
+					    public void run () {
+					    	if (j == s) {
+					    		System.out.println( "Action complete!");
+					    		if (screen != null) {
+					    			game.setScreen(screen);
+					    		}
+					    		else {
+					    			//game.setScreen(screen);
+					    		}
+					    	}
+					    }
+					}))); // end of addAction
+			}
+		} // end for
+		}// end if
 	}
 
 	@Override

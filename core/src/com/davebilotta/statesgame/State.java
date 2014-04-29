@@ -89,7 +89,7 @@ public class State {
 		StatesGame.states[31] = new State("NY","New York","Albany","");
 		StatesGame.states[32] = new State("NC","North Carolina","Raleigh","");
 		StatesGame.states[33] = new State("ND","North Dakota","Bismarck","");
-		StatesGame.states[34] = new State("OH","Ohio","Columbua","");
+		StatesGame.states[34] = new State("OH","Ohio","Columbus","");
 		StatesGame.states[35] = new State("OK","Oklahoma","Oklahoma City","");
 		StatesGame.states[36] = new State("OR","Oregon","Salem","");
 		StatesGame.states[37] = new State("PA","Pennsylvania","Harrisburg","");
@@ -106,4 +106,18 @@ public class State {
 		StatesGame.states[48] = new State("WI","Wisconsin","Madison","");
 		StatesGame.states[49] = new State("WY","Wyoming","Cheyenne","");
 	}
+	
+	//  MOTTO|
+	//  NICKNAME|
+	//  BIRD|
+	//  FLOWER|
+	//  SENATOR1|  
+	//  SENATOR2|
+	//  SENATOR1-IMAGE|
+	//  SENATOR2-IMAGE|
+	//  GOVERNOR|
+	//  POPULATION|
+	//  LARGEST CITY|
+	//  FLAG-IMAGE|
+	//  SEAL-IMAGE|
 }
