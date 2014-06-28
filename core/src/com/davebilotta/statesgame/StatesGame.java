@@ -24,11 +24,11 @@ public class StatesGame extends Game {
 	SpriteBatch batch;
 	static State[] states;
 	GameController controller;
-	private Stage stage;
-	private OrthographicCamera camera;
-	private QuestionType questionType;
+	//private Stage stage;
+	//private OrthographicCamera camera;
+	//private QuestionType questionType;
 	
-	static BitmapFont font;
+	static BitmapFont font, font2;
 	static Texture bkg;
 	
 	public enum QuestionType {
@@ -39,14 +39,16 @@ public class StatesGame extends Game {
 	public void create() {
 		State.initStates();
 		
-		FileHandle fontFile = Gdx.files.internal("generic-medium-webfont.ttf");
+		//FileHandle fontFile = Gdx.files.internal("fonts/generic-bold-webfont.ttf");
+		FileHandle fontFile = Gdx.files.internal("fonts/Bevan.ttf");
+		//FileHandle fontFile = Gdx.files.internal("fonts/ChunkFiveEx.ttf");
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
 
 		font = generator.generateFont(30);
-		//font.setColor(1f, 1f, 1f, 1);
+		font2 = generator.generateFont(36);
 		generator.dispose();
 		
-		bkg = new Texture("chalkboard.jpg");
+		bkg = new Texture("chalkboard-green.jpg");
 		
 		setScreen(new MainMenuScreen(this));
 	}		

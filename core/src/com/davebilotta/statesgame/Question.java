@@ -74,7 +74,6 @@ public class Question {
 		// For this level type, choices are State names 
 		
 		State st = getOneState();
-		
 		int c = 0;
 		
 		// add 2 other random states
@@ -93,18 +92,12 @@ public class Question {
 				}
 				if (ok) done = true;
 			}
-			//choices[j] = st.getName();
 			choices[j] = st;
 		} // end for
-				
-		System.out.println("Question choices are " + choices[0] + ", " + choices[1] + ", and " + choices[2]); 
-		// shuffle them
-		// Collections.shuffle(this.choices);
 		
 		int a = (int) Math.round(Math.floor(Math.random() * 3));
 		this.answer = choices[a];
 		
-		System.out.println("And the correct answer is " + a + " (" + choices[a] + ")");
 		
 	}
 	
@@ -115,7 +108,6 @@ public class Question {
 		// For this level type, choices are State names 
 		
 		State st = getOneState();
-		
 		int c = 0;
 		
 		// add 2 other random states
@@ -134,18 +126,16 @@ public class Question {
 				}
 				if (ok) done = true;
 			}
-			//choices[j] = st.getCapital();
 			choices[j] = st;
 		} // end for
 				
-		System.out.println("Question choices are " + choices[0] + ", " + choices[1] + ", and " + choices[2]); 
-		// shuffle them
-		// Collections.shuffle(this.choices);
-		
 		int a = (int) Math.round(Math.floor(Math.random() * 3));
 		this.answer = choices[a];
 		
-		System.out.println("And the correct answer is " + a + " (" + choices[a] + ")");
+		// Temporarily hard code to New York
+		//choices[0] = StatesGame.states[31];
+		//this.answer = choices[0];
+		
 		
 	}
 	

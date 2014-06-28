@@ -1,24 +1,30 @@
 package com.davebilotta.statesgame;
 
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.davebilotta.statesgame.StatesGame.QuestionType;
 
 public class LevelScreen extends AbstractScreen {
 
 	Question question;
 	String correctAnswer;
+	StatesGame game;
 	
 	public LevelScreen(StatesGame game, QuestionType type) {
 		super(game);
+		this.game = game;
+		
 		if (type == QuestionType.CAPITALLEVEL) {
 			this.question = new Question(QuestionType.CAPITALLEVEL);
 			this.correctAnswer = this.question.answer.getCapital();
-			this.topText = "What is the capital of " + this.question.answer.getName() + "?";
-		}
+			this.topText = "What is the capital of";
+			this.topText2 = this.question.answer.getName() + "?";
+		}	
 		if (type == QuestionType.STATELEVEL) {
 			this.question = new Question(QuestionType.STATELEVEL);
 			this.correctAnswer = this.question.answer.getName();
@@ -29,20 +35,48 @@ public class LevelScreen extends AbstractScreen {
 			this.question = new Question(QuestionType.FACTSLEVEL);
 			
 		}
-		Utils.log("The answer is " + correctAnswer);
+		
+		this.leftImagePath = this.question.answer.getImagePath();
+		//this.leftImagePath = "state_images/arizona.png";
+		
 	}
 
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
 		super.show();
-		Utils.log("Level screen show");
+		//Utils.log("Level screen show");
 	}
 	
 	@Override
 	public void buildTopText() {
 		// TODO Auto-generated method stub
 		super.buildTopText();
+	}
+	
+	// Menu buttons - Home, etc.
+	@Override
+	public void buildMenuButtons() {
+		Image homeButton = new Image(new Texture("arrow.png"));
+		
+		int buttonW = 80;
+		int buttonH = 80;
+		homeButton.setWidth(buttonW);
+		homeButton.setHeight(buttonH); 
+		homeButton.setName("home");
+			
+		homeButton.addListener(new InputListener() {
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				
+				transitionOut(new MainMenuScreen(game));
+				//game.setScreen(new MainMenuScreen(game));
+				return true;
+			}});
+		
+		// TODO: Fix this offset
+		homeButton.setPosition(0, h-buttonH);
+		stage.addActor(homeButton);
+
 	}
 	
 	@Override
@@ -93,7 +127,7 @@ public class LevelScreen extends AbstractScreen {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				String nm = event.getListenerActor().getName();
 				// TODO: This needs to check for the right answer
-				Utils.log("You just clicked " + nm);
+//				Utils.log("You just clicked " + nm);
 //				Utils.log("the correct answer is " + this.question.answer);
 				//button.
 				

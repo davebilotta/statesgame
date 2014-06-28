@@ -14,6 +14,7 @@ public class MainMenuScreen extends AbstractScreen {
 		super(game);
 		// TODO Auto-generated constructor stub
 		this.game = game;
+		this.leftImagePath = "Blank_US_Map.png";
 	}
 
 	@Override
@@ -30,14 +31,12 @@ public class MainMenuScreen extends AbstractScreen {
 		//style.fontColor = Color.WHITE;
 		//style.fontColor= Color.RED;
 		
-		//buttons = new String[] {"State Facts", "Capitals", "States"};
 		buttons = new String[] {"Capitals", "States"};
 		buttonW = 100;
 		buttonH = 50;
 		buttonSpacer = 25;
 			
-		// now position on screen
-		int bTotal = (4 * buttonH) + (2 * buttonSpacer);   // total space the buttons take up
+		int bTotal = ((buttons.length + 1) * buttonH) + (buttons.length * buttonSpacer);   // total space the buttons take up
 		startY = (this.h - bTotal)/2;		
 		yPos = startY;
 		xPos = 512 + (w - 512 - buttonW)/2;
@@ -61,33 +60,18 @@ public class MainMenuScreen extends AbstractScreen {
 				//transitionOut();
 				
 				if (nm == "States")	{
-					
 					transitionOut(new LevelScreen(game,QuestionType.STATELEVEL));
 				}
 				if (nm == "Capitals") {
 					transitionOut(new LevelScreen(game,QuestionType.CAPITALLEVEL));
 				}
-					//transitionOut = false;
-					//correct = true;
-					// TODO: Need to add a delay here
-					//game.setScreen(new LevelScreen(game,QuestionType.CAPITALLEVEL));
-					
-					/*stage.getActors().get(0).addAction(Actions.sequence(Actions.fadeOut(2), Actions.run(new Runnable() {
-					    public void run () {
-					        System.out.println("Action complete!");
-					    }
-					}))); */
-					//transitionOut();
-					
-					//game.setScreen(new LevelScreen(game,QuestionType.CAPITALLEVEL));
-					
-					
 				if (nm == "State Facts") {
 					transitionOut(new LevelScreen(game,QuestionType.FACTSLEVEL));
 				}
 				
 				return true;
-			}});
+			}
+			});
 		
 		stage.addActor(button);
 	} // end for
