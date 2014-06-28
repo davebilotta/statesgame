@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.davebilotta.statesgame.StatesGame.QuestionType;
+import com.davebilotta.statesgame.StatesGame.ScreenType;
 
 public class LevelScreen extends AbstractScreen {
 
@@ -18,6 +19,7 @@ public class LevelScreen extends AbstractScreen {
 	public LevelScreen(StatesGame game, QuestionType type) {
 		super(game);
 		this.game = game;
+		this.screenType = ScreenType.LEVEL;
 		
 		if (type == QuestionType.CAPITALLEVEL) {
 			this.question = new Question(QuestionType.CAPITALLEVEL);
@@ -28,7 +30,7 @@ public class LevelScreen extends AbstractScreen {
 		if (type == QuestionType.STATELEVEL) {
 			this.question = new Question(QuestionType.STATELEVEL);
 			this.correctAnswer = this.question.answer.getName();
-			this.topText = "What state is this?";
+			this.topText = "Which state is this?";
 		}
 		// TODO: Figure this out later
 		if (type == QuestionType.FACTSLEVEL) {
@@ -37,8 +39,7 @@ public class LevelScreen extends AbstractScreen {
 		}
 		
 		this.leftImagePath = this.question.answer.getImagePath();
-		//this.leftImagePath = "state_images/arizona.png";
-		
+			
 	}
 
 	@Override

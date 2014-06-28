@@ -24,34 +24,41 @@ public class StatesGame extends Game {
 	SpriteBatch batch;
 	static State[] states;
 	GameController controller;
-	//private Stage stage;
-	//private OrthographicCamera camera;
-	//private QuestionType questionType;
 	
+    public static int WINDOW_WIDTH, WINDOW_HEIGHT;
+    public static float SCALE_X,SCALE_Y;
+
 	static BitmapFont font, font2;
 	static Texture bkg;
 	
 	public enum QuestionType {
 		STATELEVEL, CAPITALLEVEL, FACTSLEVEL
 	}
+	public enum ScreenType {
+		MAIN,LEVEL
+	}
 
 	@Override
 	public void create() {
-		State.initStates();
+		WINDOW_WIDTH = Gdx.graphics.getWidth();
+		WINDOW_HEIGHT = Gdx.graphics.getHeight();
 		
-		//FileHandle fontFile = Gdx.files.internal("fonts/generic-bold-webfont.ttf");
+		State.initStates();
+		initFonts();
+		bkg = new Texture("chalkboard-green.jpg");
+		
+		setScreen(new MainMenuScreen(this));
+	}		
+	
+	public static void initFonts() {
+				
 		FileHandle fontFile = Gdx.files.internal("fonts/Bevan.ttf");
-		//FileHandle fontFile = Gdx.files.internal("fonts/ChunkFiveEx.ttf");
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
 
 		font = generator.generateFont(30);
 		font2 = generator.generateFont(36);
 		generator.dispose();
-		
-		bkg = new Texture("chalkboard-green.jpg");
-		
-		setScreen(new MainMenuScreen(this));
-	}		
+	}
 
 
 }
