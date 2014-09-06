@@ -98,7 +98,6 @@ public class Question {
 		int a = (int) Math.round(Math.floor(Math.random() * 3));
 		this.answer = choices[a];
 		
-		
 	}
 	
 	// TODO: Consolidate this
@@ -132,10 +131,10 @@ public class Question {
 		int a = (int) Math.round(Math.floor(Math.random() * 3));
 		this.answer = choices[a];
 		
-		// Temporarily hard code to New York
-		//choices[0] = StatesGame.states[31];
+		// temporarily return Texas
+		//choices[0] =  StatesGame.states[42];
 		//this.answer = choices[0];
-		
+	
 		
 	}
 	

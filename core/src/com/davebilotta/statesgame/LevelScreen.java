@@ -16,30 +16,34 @@ public class LevelScreen extends AbstractScreen {
 	String correctAnswer;
 	StatesGame game;
 	
+	Question[] questions;  // array of 50 questions for screen
+	
 	public LevelScreen(StatesGame game, QuestionType type) {
 		super(game);
 		this.game = game;
 		this.screenType = ScreenType.LEVEL;
+		
+		questions = new Question[50];
 		
 		if (type == QuestionType.CAPITALLEVEL) {
 			this.question = new Question(QuestionType.CAPITALLEVEL);
 			this.correctAnswer = this.question.answer.getCapital();
 			this.topText = "What is the capital of";
 			this.topText2 = this.question.answer.getName() + "?";
+			this.leftImagePath = this.question.answer.getImagePath(QuestionType.CAPITALLEVEL);
 		}	
 		if (type == QuestionType.STATELEVEL) {
 			this.question = new Question(QuestionType.STATELEVEL);
 			this.correctAnswer = this.question.answer.getName();
 			this.topText = "Which state is this?";
+			this.leftImagePath = this.question.answer.getImagePath(QuestionType.STATELEVEL);
 		}
 		// TODO: Figure this out later
 		if (type == QuestionType.FACTSLEVEL) {
 			this.question = new Question(QuestionType.FACTSLEVEL);
-			
+			this.leftImagePath = this.question.answer.getImagePath(QuestionType.FACTSLEVEL);
 		}
-		
-		this.leftImagePath = this.question.answer.getImagePath();
-			
+					
 	}
 
 	@Override
@@ -127,11 +131,7 @@ public class LevelScreen extends AbstractScreen {
 		button.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				String nm = event.getListenerActor().getName();
-				// TODO: This needs to check for the right answer
-//				Utils.log("You just clicked " + nm);
-//				Utils.log("the correct answer is " + this.question.answer);
-				//button.
-				
+			
 				if (nm == correctAnswer)	{
 					Utils.log("CORRECT!");			
 					correct = true;

@@ -128,16 +128,20 @@ public class AbstractScreen implements Screen {
 
 		// Workaround for not all states having images
 		if (!path.equals("")) {
-			// TODO: fix heights
+			
 			Texture text = new Texture(path);
 
 			Image image = new Image(new Texture(path));
 			scaleX = scaleY = getScaling(image);
 
-			image.setPosition(25, ((h - image.getHeight() * scaleY) / 2));
+			//image.setPosition(((w-40)- (image.getHeight() * scaleY))/2, ((h - image.getHeight() * scaleY) / 2));
+			int pos;
+			if (this.screenType == ScreenType.MAIN) pos = 25;
+			else pos = 100;
+			image.setPosition(pos, ((h - image.getHeight() * scaleY) / 2));
 			image.setScale(scaleX, scaleY);
 
-			image.setColor(new Color(200, 200, 200, 0.5f));
+			//image.setColor(new Color(200, 200, 200, 0.5f));
 
 			stage.addActor(image);
 		}
@@ -162,7 +166,7 @@ public class AbstractScreen implements Screen {
 		}
 		else {
 			if ((image.getWidth() > 900) || (image.getHeight() > 900)) {
-				scale = 0.33f;
+				scale = 0.40f;
 				Utils.log(scale+"");
 				return scale;
 			} 
@@ -205,7 +209,6 @@ public class AbstractScreen implements Screen {
 		stage.draw();
 	}
 
-	// public void transitionOut(final LevelScreen screen) {
 	public void transitionOut(final AbstractScreen screen) {
 
 		Array<Actor> actors = stage.getActors();
@@ -225,9 +228,8 @@ public class AbstractScreen implements Screen {
 				Action slideDown = Actions.moveTo(a.getX(), (0 - 1000),
 						transitionSpeed);
 
-				// Don't transition background or Home button
-
-				if (a.getName() == "background" || a.getName() == "home") {
+				// Don't transition background, Home, or Top Text
+				if (a.getName() == "background" || a.getName() == "home" || a.getName() == "topText") {
 
 				} else {
 					Action transitionEffect = fadeOut;
