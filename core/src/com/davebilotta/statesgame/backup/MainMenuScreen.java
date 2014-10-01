@@ -58,18 +58,16 @@ public class MainMenuScreen extends AbstractScreen {
 					String nm = event.getListenerActor().getName();
 
 					if (nm == "States") {
-						//transitionOut(new LevelScreen(game,QuestionType.STATELEVEL));
-						transitionOut();
-						
-						game.setScreen(new LevelScreen(game,QuestionType.STATELEVEL));
+						transitionOut(new LevelScreen(game,
+								QuestionType.STATELEVEL));
 					}
 					if (nm == "Capitals") {
-					//	transitionOut(new LevelScreen(game,
-						//		QuestionType.CAPITALLEVEL));
+						transitionOut(new LevelScreen(game,
+								QuestionType.CAPITALLEVEL));
 					}
 					if (nm == "State Facts") {
-						//transitionOut(new LevelScreen(game,
-						//		QuestionType.FACTSLEVEL));
+						transitionOut(new LevelScreen(game,
+								QuestionType.FACTSLEVEL));
 					}
 
 					return true;

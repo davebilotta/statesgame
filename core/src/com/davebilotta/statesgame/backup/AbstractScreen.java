@@ -15,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.davebilotta.statesgame.StatesGame.QuestionType;
 import com.davebilotta.statesgame.StatesGame.ScreenType;
 
 public class AbstractScreen implements Screen {
@@ -37,9 +36,7 @@ public class AbstractScreen implements Screen {
 	float transitionSpeed = 1.5f;
 	
 	ScreenType screenType;
-	private Question question;
-	private String correctAnswer;
-	
+
 	public AbstractScreen(StatesGame game) {
 		this.game = game;
 
@@ -211,20 +208,13 @@ public class AbstractScreen implements Screen {
 		stage.act();
 		stage.draw();
 	}
-	
-	
-	
 
-//	public void transitionOut(final AbstractScreen screen) {
-	public void transitionOut() {
+	public void transitionOut(final AbstractScreen screen) {
 
-		Array<Actor> actors = this.stage.getActors();
+		Array<Actor> actors = stage.getActors();
 		Actor a;
-		
-				
+
 		final int s = actors.size - 1;
-		Utils.log("TRANSITION OUT: number of actors " + s);
-		
 		if (!transitionOut) {
 			for (int i = 0; i < actors.size; i++) {
 				a = actors.get(i);
@@ -250,11 +240,9 @@ public class AbstractScreen implements Screen {
 									if (j == s) {
 										// System.out.println(
 										// "Action complete!");
-										//if (screen != null) {
-											// This calls Levelscreen constructor
-											//game.setScreen(screen);
-											Utils.log("fully transitioned out");
-										//}
+										if (screen != null) {
+											game.setScreen(screen);
+										}
 
 									}
 								}

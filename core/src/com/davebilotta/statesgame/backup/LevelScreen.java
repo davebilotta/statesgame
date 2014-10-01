@@ -1,8 +1,5 @@
 package com.davebilotta.statesgame;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -12,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.davebilotta.statesgame.StatesGame.QuestionType;
 import com.davebilotta.statesgame.StatesGame.ScreenType;
-import com.sun.javafx.scene.SceneUtils;
 
 public class LevelScreen extends AbstractScreen {
 
@@ -20,107 +16,35 @@ public class LevelScreen extends AbstractScreen {
 	String correctAnswer;
 	StatesGame game;
 	
-	public int test;
+	Question[] questions;  // array of 50 questions for screen
 	
-	ArrayList<Question> questions;  // array of 50 questions for screen
-	private int counter = -1;        // this is what question we're on
-
 	public LevelScreen(StatesGame game, QuestionType type) {
-		
 		super(game);
 		this.game = game;
 		this.screenType = ScreenType.LEVEL;
 		
-		buildQuestions(type);
-		Utils.log("Constructor - get next question");
-		getNextQuestion(type);
+		questions = new Question[50];
+		
+		if (type == QuestionType.CAPITALLEVEL) {
+			this.question = new Question(QuestionType.CAPITALLEVEL);
+			this.correctAnswer = this.question.answer.getCapital();
+			this.topText = "What is the capital of";
+			this.topText2 = this.question.answer.getName() + "?";
+			this.leftImagePath = this.question.answer.getImagePath(QuestionType.CAPITALLEVEL);
+		}	
+		if (type == QuestionType.STATELEVEL) {
+			this.question = new Question(QuestionType.STATELEVEL);
+			this.correctAnswer = this.question.answer.getName();
+			this.topText = "Which state is this?";
+			this.leftImagePath = this.question.answer.getImagePath(QuestionType.STATELEVEL);
+		}
+		// TODO: Figure this out later
+		if (type == QuestionType.FACTSLEVEL) {
+			this.question = new Question(QuestionType.FACTSLEVEL);
+			this.leftImagePath = this.question.answer.getImagePath(QuestionType.FACTSLEVEL);
+		}
 					
 	}
-	
-	// **** OLD WAY ****
-	public void getNextQuestionOriginal(QuestionType type) {
-		Utils.log("type is " + type);
-		
-		if (type == QuestionType.CAPITALLEVEL) {
-			this.question = new Question(QuestionType.CAPITALLEVEL);
-			this.correctAnswer = this.question.answer.getCapital();
-			this.topText = "What is the capital of";
-			this.topText2 = this.question.answer.getName() + "?";
-			this.leftImagePath = this.question.answer.getImagePath(QuestionType.CAPITALLEVEL);
-		}	
-		if (type == QuestionType.STATELEVEL) {
-			this.question = new Question(QuestionType.STATELEVEL);
-			this.correctAnswer = this.question.answer.getName();
-			this.topText = "Which state is this?";
-			this.leftImagePath = this.question.answer.getImagePath(QuestionType.STATELEVEL);
-		}
-		// TODO: Figure this out later
-		if (type == QuestionType.FACTSLEVEL) {
-			this.question = new Question(QuestionType.FACTSLEVEL);
-			this.leftImagePath = this.question.answer.getImagePath(QuestionType.FACTSLEVEL);
-		}
-		
-		this.show();
-	}
-	
-	// **** NEW WAY ****
-	public void getNextQuestion(QuestionType type) {
-		
-		counter++;
-		if (counter == 50) counter = 0;
-		
-		this.question = questions.get(counter);
-		
-		if (type == QuestionType.CAPITALLEVEL) {
-			
-			this.correctAnswer = this.question.answer.getCapital();
-			this.topText = "What is the capital of";
-			this.topText2 = this.question.answer.getName() + "?";
-			this.leftImagePath = this.question.answer.getImagePath(QuestionType.CAPITALLEVEL);
-		}	
-		if (type == QuestionType.STATELEVEL) {
-		
-			this.correctAnswer = this.question.answer.getName();
-			this.topText = "Which state is this?";
-			this.leftImagePath = this.question.answer.getImagePath(QuestionType.STATELEVEL);
-		}
-		// TODO: Figure this out later
-		if (type == QuestionType.FACTSLEVEL) {
-			this.leftImagePath = this.question.answer.getImagePath(QuestionType.FACTSLEVEL);
-		}
-		
-		this.show();
-	}
-	
-	public void buildQuestions(QuestionType type) {
-		questions = new ArrayList<Question>();
-		for (int i = 0; i < 50; i ++) {
-			questions.add(new Question(type, i));
-		}
-		
-		Collections.shuffle(questions);		
-	}
-	
-	/*public void getNextQuestion(QuestionType type) {
-		if (type == QuestionType.CAPITALLEVEL) {
-			this.question = new Question(QuestionType.CAPITALLEVEL);
-			this.correctAnswer = this.question.answer.getCapital();
-			this.topText = "What is the capital of";
-			this.topText2 = this.question.answer.getName() + "?";
-			this.leftImagePath = this.question.answer.getImagePath(QuestionType.CAPITALLEVEL);
-		}	
-		if (type == QuestionType.STATELEVEL) {
-			this.question = new Question(QuestionType.STATELEVEL);
-			this.correctAnswer = this.question.answer.getName();
-			this.topText = "Which state is this?";
-			this.leftImagePath = this.question.answer.getImagePath(QuestionType.STATELEVEL);
-		}
-		// TODO: Figure this out later
-		if (type == QuestionType.FACTSLEVEL) {
-			this.question = new Question(QuestionType.FACTSLEVEL);
-			this.leftImagePath = this.question.answer.getImagePath(QuestionType.FACTSLEVEL);
-		}
-	} */
 
 	@Override
 	public void show() {
@@ -149,10 +73,8 @@ public class LevelScreen extends AbstractScreen {
 		homeButton.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				
-				//transitionOut(new MainMenuScreen(game));
-				
-				transitionOut();
-				game.setScreen(new MainMenuScreen(game));
+				transitionOut(new MainMenuScreen(game));
+				//game.setScreen(new MainMenuScreen(game));
 				return true;
 			}});
 		
@@ -166,6 +88,11 @@ public class LevelScreen extends AbstractScreen {
 	public void buildButtons() {
 		TextButton button;
 		
+		//TextButtonStyle style = new TextButtonStyle();
+		//style.font = StatesGame.font;
+		//style.fontColor = Color.GREEN;
+		
+		//buttons = this.question.choices;
 		if (this.question.questionType == QuestionType.CAPITALLEVEL) {
 			buttons = this.question.getCapitalNames();
 		}
@@ -208,15 +135,8 @@ public class LevelScreen extends AbstractScreen {
 				if (nm == correctAnswer)	{
 					Utils.log("CORRECT!");			
 					correct = true;
-					
-					//transitionOut(new LevelScreen(gm,tp));
-					transitionOut();
-					
-					// new
-					Utils.log("calling next question");
-					getNextQuestion(tp);
-					
-					
+					// TODO: This needs to get next question
+					transitionOut(new LevelScreen(gm,tp));
 				}
 				else {
 					Utils.log("INCORRECT");
