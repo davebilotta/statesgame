@@ -13,6 +13,8 @@ public class Question {
 	private String imagePath; // image that displays on the left
 	private String topText; // This is the text at the top (ie, the actual question)
 
+	private static final int NUM_CHOICES = 3;
+	
 	public Question(QuestionType type) {
 		this.questionType = type;
 		buildChoices();
@@ -24,7 +26,7 @@ public class Question {
 	}
 
 	public void buildChoices() {
-		this.choices = new State[3];
+		this.choices = new State[NUM_CHOICES];
 		
 		switch (questionType) {
 			case STATELEVEL:
@@ -41,7 +43,7 @@ public class Question {
 	}
 	
 	public void buildChoices(int id) {
-		this.choices = new State[3];
+		this.choices = new State[NUM_CHOICES];
 		
 		switch (questionType) {
 			case STATELEVEL:
@@ -76,7 +78,7 @@ public class Question {
 		int c = 0;
 		
 		// add 2 other random states
-		for (int j = 0; j < 3; j++) {
+		for (int j = 0; j < NUM_CHOICES; j++) {
 			boolean done = false;
 		
 			while (!done) {
@@ -108,7 +110,7 @@ public class Question {
 		choices[0] = st;
 		this.answer = st;
 		
-		for (int j = 1; j < 3;j++) {
+		for (int j = 1; j < NUM_CHOICES;j++) {
 		boolean done = false;
 		while (!done) {
 			boolean ok = true;
@@ -156,7 +158,7 @@ public class Question {
 		int c = 0;
 		
 		// add 2 other random states
-		for (int j = 0; j < 3; j++) {
+		for (int j = 0; j < NUM_CHOICES; j++) {
 			boolean done = false;
 		
 			while (!done) {
@@ -185,34 +187,31 @@ public class Question {
 	public void buildCapitalChoices(int id) {
 		// add answer into list of choices
 		// For this level type, choices are State names 
-		
 		State st = StatesGame.states[id];
-		int c = 0;
 		
-		// add 2 other random states
-		for (int j = 0; j < 3; j++) {
-			boolean done = false;
+		choices[0] = st;
+		this.answer = st;
 		
-			while (!done) {
-				boolean ok = true;
-			
-				st = getOneState();
-				for (int i = 0; i < choices.length; i++) {
-					//if (st.getCapital() == choices[i]) {
-					if (st == choices[i]) {
-						ok = false;
-					}
+		for (int j = 1; j < NUM_CHOICES;j++) {
+		boolean done = false;
+		while (!done) {
+			boolean ok = true;
+		
+			st = getOneState();
+			for (int i = 0; i < choices.length; i++) {
+				if (st == choices[i]) {
+					ok = false;
 				}
-				if (ok) done = true;
 			}
-			choices[j] = st;
-		} // end for
-				
-		int a = (int) Math.round(Math.floor(Math.random() * 3));
-		this.answer = choices[a];
-	
-	}
+			if (ok) done = true;
+		}
+		choices[j] = st;
+		}
 
+		// Rearrange button choices so answer isn't always in the same position
+		choices = shuffleStates(choices);
+				
+	}
 	
 	public void buildFactChoices() {
 
@@ -223,7 +222,7 @@ public class Question {
 	}
 
 	public String[] getCapitalNames() {
-		String[] ret = new String[3];
+		String[] ret = new String[NUM_CHOICES];
 		for (int i = 0; i < choices.length; i++) {
 			ret[i] = choices[i].getCapital();
 		}
@@ -231,7 +230,7 @@ public class Question {
 	}
 
 	public String[] getStateNames() {
-		String[] ret = new String[3];
+		String[] ret = new String[NUM_CHOICES];
 		for (int i = 0; i < choices.length; i++) {
 			ret[i] = choices[i].getName();
 		}
@@ -240,7 +239,7 @@ public class Question {
 
 	public String[] getFacts() {
 		// TODO: This isn't done yet
-		String[] ret = new String[3];
+		String[] ret = new String[NUM_CHOICES];
 		for (int i = 0; i < choices.length; i++) {
 			ret[i] = choices[i].getCapital();
 		}

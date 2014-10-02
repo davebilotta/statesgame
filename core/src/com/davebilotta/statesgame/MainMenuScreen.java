@@ -64,8 +64,9 @@ public class MainMenuScreen extends AbstractScreen {
 						game.setScreen(new LevelScreen(game,QuestionType.STATELEVEL));
 					}
 					if (nm == "Capitals") {
-					//	transitionOut(new LevelScreen(game,
-						//		QuestionType.CAPITALLEVEL));
+						transitionOut();
+						
+						game.setScreen(new LevelScreen(game,QuestionType.CAPITALLEVEL));
 					}
 					if (nm == "State Facts") {
 						//transitionOut(new LevelScreen(game,

@@ -155,37 +155,37 @@ public class AbstractScreen implements Screen {
 		// TODO: Fix scaling for really big images like California
 
 		float scale;
-		Utils.log(image.getName());
+		//Utils.log(image.getName());
 		
 		if (this.screenType == ScreenType.MAIN) {
 			scale = 1.0f;
-			Utils.log(scale+"");
+		//	Utils.log(scale+"");
 			return scale;
 		} 
 		if ((image.getWidth() > 1000) || (image.getHeight() > 1000)) {
 			scale = 0.25f;
-			Utils.log(scale+"");
+			//Utils.log(scale+"");
 			return scale;
 		}
 		else {
 			if ((image.getWidth() > 900) || (image.getHeight() > 900)) {
 				scale = 0.40f;
-				Utils.log(scale+"");
+				//Utils.log(scale+"");
 				return scale;
 			} 
 			if ((image.getWidth() > 600) || (image.getHeight() > 600)) {
 				scale = 0.5f;
-				Utils.log(scale+"");
+			//	Utils.log(scale+"");
 				return scale;
 			}
 			if ((image.getWidth() > 400) || (image.getHeight() > 400)) {
 					scale = 0.75f;
-					Utils.log(scale+"");
+				//	Utils.log(scale+"");
 					return scale;
 			}
 			else {
 				scale = 1.0f;
-				Utils.log(scale+"");
+			//	Utils.log(scale+"");
 				return scale;
 				}
 		}
@@ -221,7 +221,6 @@ public class AbstractScreen implements Screen {
 		Array<Actor> actors = this.stage.getActors();
 		Actor a;
 		
-				
 		final int s = actors.size - 1;
 		Utils.log("TRANSITION OUT: number of actors " + s);
 		
