@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -22,13 +23,14 @@ public class LevelScreen extends AbstractScreen {
 
 	public int test;
 
-	ArrayList<Question> questions; // array of 50 questions for screen
-	private int counter; // this is what question we're on
+	ArrayList<Question> questions;   // array of 50 questions for screen
+	private int counter;             // this is what question we're on
 
 	private static final int POINT_VALUE = 5;
 	private int totalScore;
 	private int questionScore;
 	private int questionGuesses;
+	private int levelSize;
 
 	public LevelScreen(StatesGame game, QuestionType type) {
 
@@ -39,39 +41,13 @@ public class LevelScreen extends AbstractScreen {
 		counter = -1;
 		this.totalScore = 0;
 
+		if (type == QuestionType.FACTSLEVEL) this.levelSize = 100;
+		else this.levelSize = 10;
+		
 		buildQuestions(type);
 		Utils.log("Constructor - get next question");
 		getNextQuestion(type);
 
-	}
-
-	// **** OLD WAY ****
-	public void getNextQuestionOriginal(QuestionType type) {
-		Utils.log("type is " + type);
-
-		if (type == QuestionType.CAPITALLEVEL) {
-			this.question = new Question(QuestionType.CAPITALLEVEL);
-			this.correctAnswer = this.question.answer.getCapital();
-			this.topText = "What is the capital of";
-			this.topText2 = this.question.answer.getName() + "?";
-			this.leftImagePath = this.question.answer
-					.getImagePath(QuestionType.CAPITALLEVEL);
-		}
-		if (type == QuestionType.STATELEVEL) {
-			this.question = new Question(QuestionType.STATELEVEL);
-			this.correctAnswer = this.question.answer.getName();
-			this.topText = "Which state is this?";
-			this.leftImagePath = this.question.answer
-					.getImagePath(QuestionType.STATELEVEL);
-		}
-		// TODO: Figure this out later
-		if (type == QuestionType.FACTSLEVEL) {
-			this.question = new Question(QuestionType.FACTSLEVEL);
-			this.leftImagePath = this.question.answer
-					.getImagePath(QuestionType.FACTSLEVEL);
-		}
-
-		this.show();
 	}
 
 	// **** NEW WAY ****
@@ -81,15 +57,18 @@ public class LevelScreen extends AbstractScreen {
 		this.questionGuesses = 0;
 
 		counter++;
-		Utils.log("Number " + (counter + 1) + " of 50");
+		Utils.log("Number " + (counter + 1) + " of " + this.levelSize);
 
-		if (counter == 50) {
-			Utils.log("***** END OF LEVEL - EVENTUALLY GO BACK TO MENU");
-			// TODO: Display level end screen, score
+		if (counter == this.levelSize) {
 			Utils.log("Total Score is: " + totalScore);
 			counter = 0;
+			this.stage.getActors().clear();
+			this.stage.clear();
+			
+			game.setScreen(new LevelEndScreen(totalScore,levelSize,POINT_VALUE));
 		}
 
+		Utils.log("dave");
 		this.question = questions.get(counter);
 
 		if (type == QuestionType.CAPITALLEVEL) {
@@ -113,16 +92,25 @@ public class LevelScreen extends AbstractScreen {
 					.getImagePath(QuestionType.FACTSLEVEL);
 		}
 
-		this.show();
+		//this.show();
 	}
 
 	public void buildQuestions(QuestionType type) {
 		questions = new ArrayList<Question>();
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < this.levelSize; i++) {
 			questions.add(new Question(type, i));
 		}
 
 		Collections.shuffle(questions);
+		
+		/* Uncomment this if you need to see the questions ever 
+		  
+	    Utils.log("Here are the questions:");
+		for (int i = 0; i < this.levelSize; i++) {
+			Utils.log("==> " + questions.get(i).answer.getName());
+		}
+		*/
+				
 	}
 
 	@Override
@@ -222,13 +210,14 @@ public class LevelScreen extends AbstractScreen {
 			});
 
 			stage.addActor(button);
+			
+			
+			
 		} // end for
 	}
 
 	public void correctGuess(QuestionType tp) {
-		Utils.log("CORRECT!");
 		correct = true;
-
 		questionGuesses++;
 
 		// calculate score
@@ -246,7 +235,7 @@ public class LevelScreen extends AbstractScreen {
 
 		}
 
-		transitionOut();
+		transitionOut(this);
 
 		Utils.log("Total score is " + totalScore + "; calling next question");
 		getNextQuestion(tp);

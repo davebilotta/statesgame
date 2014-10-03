@@ -178,9 +178,7 @@ public class Question {
 		int a = (int) Math.round(Math.floor(Math.random() * 3));
 		this.answer = choices[a];
 		
-		// temporarily return Texas
-		//choices[0] =  StatesGame.states[42];
-		//this.answer = choices[0];
+		
 	}
 	
 	// New way way

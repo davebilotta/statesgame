@@ -52,9 +52,7 @@ public class AbstractScreen implements Screen {
 		style.fontColor = Color.ORANGE;
 
 		labelStyle.font = StatesGame.font;
-		labelStyle2.font = StatesGame.font2;
 		labelStyle.fontColor = Color.WHITE;
-		labelStyle2.fontColor = Color.RED;
 
 		buttonW = 100;
 		buttonH = 50;
@@ -155,37 +153,30 @@ public class AbstractScreen implements Screen {
 		// TODO: Fix scaling for really big images like California
 
 		float scale;
-		//Utils.log(image.getName());
 		
 		if (this.screenType == ScreenType.MAIN) {
 			scale = 1.0f;
-		//	Utils.log(scale+"");
 			return scale;
 		} 
 		if ((image.getWidth() > 1000) || (image.getHeight() > 1000)) {
 			scale = 0.25f;
-			//Utils.log(scale+"");
 			return scale;
 		}
 		else {
 			if ((image.getWidth() > 900) || (image.getHeight() > 900)) {
 				scale = 0.40f;
-				//Utils.log(scale+"");
 				return scale;
 			} 
 			if ((image.getWidth() > 600) || (image.getHeight() > 600)) {
 				scale = 0.5f;
-			//	Utils.log(scale+"");
 				return scale;
 			}
 			if ((image.getWidth() > 400) || (image.getHeight() > 400)) {
 					scale = 0.75f;
-				//	Utils.log(scale+"");
 					return scale;
 			}
 			else {
 				scale = 1.0f;
-			//	Utils.log(scale+"");
 				return scale;
 				}
 		}
@@ -213,9 +204,47 @@ public class AbstractScreen implements Screen {
 	}
 	
 	
-	
+	public void transitionOut(final AbstractScreen screen) {
+		
+			Array<Actor> actors = this.stage.getActors();
+			Actor a;
+			
+			final int s = actors.size - 1;
+			Utils.log("TRANSITION OUT: number of actors " + s);
+			
+			if (!transitionOut) {
+				for (int i = 0; i < actors.size; i++) {
+					a = actors.get(i);
+					final int j = i;
 
-//	public void transitionOut(final AbstractScreen screen) {
+					// These shouldn't be here, only b/c we need a's x and Y
+					// position
+					Action fadeOut = Actions.fadeOut(transitionSpeed);
+					Action slideLeft = Actions.moveTo((0 - 2000), a.getY(),
+							transitionSpeed);
+					Action slideDown = Actions.moveTo(a.getX(), (0 - 1000),
+							transitionSpeed);
+
+					// Don't transition background, Home, or Top Text
+					if (a.getName() == "background" || a.getName() == "home" || a.getName() == "topText") {
+
+					} else {
+						Action transitionEffect = fadeOut;
+						a.addAction(Actions.sequence(transitionEffect,
+								Actions.run(new Runnable() {
+
+									public void run() {
+										if (j == s) game.setScreen(screen);
+
+									}
+								}))); // end of addAction
+					}
+				} // end for
+			}// end if
+		}
+
+	// EVENTUALLY REMOVE THIS
+		
 	public void transitionOut() {
 
 		Array<Actor> actors = this.stage.getActors();

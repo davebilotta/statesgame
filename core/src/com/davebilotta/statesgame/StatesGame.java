@@ -28,7 +28,7 @@ public class StatesGame extends Game {
     public static int WINDOW_WIDTH, WINDOW_HEIGHT;
     public static float SCALE_X,SCALE_Y;
 
-	static BitmapFont font, font2;
+	static BitmapFont font, largeFont, scoreFont;
 	static Texture bkg;
 	
 	public enum QuestionType {
@@ -56,7 +56,9 @@ public class StatesGame extends Game {
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
 
 		font = generator.generateFont(30);
-		font2 = generator.generateFont(36);
+		largeFont = generator.generateFont(48);
+		scoreFont = generator.generateFont(200);
+		
 		generator.dispose();
 	}
 
