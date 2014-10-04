@@ -54,6 +54,10 @@ public class AbstractScreen implements Screen {
 		labelStyle.font = StatesGame.font;
 		labelStyle.fontColor = Color.WHITE;
 
+		labelStyle2.font = StatesGame.font;
+		labelStyle2.fontColor = Color.RED;
+
+		
 		buttonW = 100;
 		buttonH = 50;
 		buttonSpacer = 25;

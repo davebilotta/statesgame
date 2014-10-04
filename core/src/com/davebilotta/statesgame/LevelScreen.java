@@ -42,7 +42,7 @@ public class LevelScreen extends AbstractScreen {
 		this.totalScore = 0;
 
 		if (type == QuestionType.FACTSLEVEL) this.levelSize = 100;
-		else this.levelSize = 10;
+		else this.levelSize = 50;
 		
 		buildQuestions(type);
 		Utils.log("Constructor - get next question");
@@ -65,10 +65,9 @@ public class LevelScreen extends AbstractScreen {
 			this.stage.getActors().clear();
 			this.stage.clear();
 			
-			game.setScreen(new LevelEndScreen(totalScore,levelSize,POINT_VALUE));
+			game.setScreen(new LevelEndScreen(game,totalScore,levelSize,POINT_VALUE));
 		}
 
-		Utils.log("dave");
 		this.question = questions.get(counter);
 
 		if (type == QuestionType.CAPITALLEVEL) {

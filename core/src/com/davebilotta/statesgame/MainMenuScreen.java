@@ -34,6 +34,8 @@ public class MainMenuScreen extends AbstractScreen {
 		buttonH = 50;
 		buttonSpacer = 25;
 
+		AbstractScreen screen = this;
+		
 		int bTotal = ((buttons.length + 1) * buttonH)
 				+ (buttons.length * buttonSpacer); // total space the buttons
 													// take up
@@ -57,21 +59,11 @@ public class MainMenuScreen extends AbstractScreen {
 						int pointer, int button) {
 					String nm = event.getListenerActor().getName();
 
-					if (nm == "States") {
-						//transitionOut(new LevelScreen(game,QuestionType.STATELEVEL));
-						transitionOut();
-						
-						game.setScreen(new LevelScreen(game,QuestionType.STATELEVEL));
-					}
-					if (nm == "Capitals") {
-						transitionOut();
-						
-						game.setScreen(new LevelScreen(game,QuestionType.CAPITALLEVEL));
-					}
-					if (nm == "State Facts") {
-						//transitionOut(new LevelScreen(game,
-						//		QuestionType.FACTSLEVEL));
-					}
+					transitionOut();
+					
+					if (nm == "States") game.setScreen(new LevelScreen(game,QuestionType.STATELEVEL));
+					else if (nm == "Capitals") game.setScreen(new LevelScreen(game,QuestionType.CAPITALLEVEL));
+						//else game.setScreen(new LevelScreen(game,QuestionType.FACTSLEVEL));
 
 					return true;
 				}

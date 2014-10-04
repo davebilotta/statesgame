@@ -28,7 +28,7 @@ public class StatesGame extends Game {
     public static int WINDOW_WIDTH, WINDOW_HEIGHT;
     public static float SCALE_X,SCALE_Y;
 
-	static BitmapFont font, largeFont, scoreFont;
+	static BitmapFont smallFont,font, largeFont, scoreFont;
 	static Texture bkg;
 	
 	public enum QuestionType {
@@ -55,6 +55,7 @@ public class StatesGame extends Game {
 		FileHandle fontFile = Gdx.files.internal("fonts/Bevan.ttf");
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
 
+		smallFont = generator.generateFont(15);
 		font = generator.generateFont(30);
 		largeFont = generator.generateFont(48);
 		scoreFont = generator.generateFont(200);
