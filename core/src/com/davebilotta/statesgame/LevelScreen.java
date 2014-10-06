@@ -3,17 +3,15 @@ package com.davebilotta.statesgame;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.davebilotta.statesgame.StatesGame.QuestionType;
 import com.davebilotta.statesgame.StatesGame.ScreenType;
-import com.sun.javafx.scene.SceneUtils;
 
 public class LevelScreen extends AbstractScreen {
 
@@ -135,14 +133,14 @@ public class LevelScreen extends AbstractScreen {
 		homeButton.setWidth(buttonW);
 		homeButton.setHeight(buttonH);
 		homeButton.setName("home");
+		
+		final AbstractScreen screen = this;
 
 		homeButton.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
 
-				// transitionOut(new MainMenuScreen(game));
-
-				transitionOut();
+				transitionOut(screen);
 				game.setScreen(new MainMenuScreen(game));
 				return true;
 			}
@@ -197,12 +195,15 @@ public class LevelScreen extends AbstractScreen {
 			button.addListener(new InputListener() {
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
-					String nm = event.getListenerActor().getName();
+					Actor actor = event.getListenerActor();
+					String nm = actor.getName();
 
 					if (nm == correctAnswer)
 						correctGuess(tp);
 					else
-						incorrectGuess();
+						incorrectGuess(actor);
+					//actor.setPosition(x, y);
+					//actor.setColor(Color.RED);
 
 					return true;
 				}
@@ -241,9 +242,11 @@ public class LevelScreen extends AbstractScreen {
 
 	}
 
-	public void incorrectGuess() {
-		questionGuesses++;
-		Utils.log("INCORRECT");
+	public void incorrectGuess(Actor actor) {
+		questionGuesses++;		
+		actor.remove();
+		
+		// TODO: Maybe play a sound?
 	}
 
 }

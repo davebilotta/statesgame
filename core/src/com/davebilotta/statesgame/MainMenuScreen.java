@@ -1,11 +1,8 @@
 package com.davebilotta.statesgame;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.davebilotta.statesgame.StatesGame.QuestionType;
 import com.davebilotta.statesgame.StatesGame.ScreenType;
 
@@ -17,6 +14,7 @@ public class MainMenuScreen extends AbstractScreen {
 		this.game = game;
 		this.leftImagePath = "Blank_US_Map.png";
 		this.screenType = ScreenType.MAIN;
+		this.topText = "Select game mode";
 	}
 
 	@Override
@@ -24,6 +22,13 @@ public class MainMenuScreen extends AbstractScreen {
 		// TODO Auto-generated method stub
 		super.show();
 
+	}
+
+	@Override
+	public void buildTopText() {
+		// TODO Auto-generated method stub
+		super.buildTopText();
+		
 	}
 
 	public void buildButtons() {
@@ -34,7 +39,7 @@ public class MainMenuScreen extends AbstractScreen {
 		buttonH = 50;
 		buttonSpacer = 25;
 
-		AbstractScreen screen = this;
+		final AbstractScreen screen = this;
 		
 		int bTotal = ((buttons.length + 1) * buttonH)
 				+ (buttons.length * buttonSpacer); // total space the buttons
@@ -59,7 +64,7 @@ public class MainMenuScreen extends AbstractScreen {
 						int pointer, int button) {
 					String nm = event.getListenerActor().getName();
 
-					transitionOut();
+					transitionOut(screen);
 					
 					if (nm == "States") game.setScreen(new LevelScreen(game,QuestionType.STATELEVEL));
 					else if (nm == "Capitals") game.setScreen(new LevelScreen(game,QuestionType.CAPITALLEVEL));

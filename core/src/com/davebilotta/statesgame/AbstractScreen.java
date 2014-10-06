@@ -12,10 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.davebilotta.statesgame.StatesGame.QuestionType;
 import com.davebilotta.statesgame.StatesGame.ScreenType;
 
 public class AbstractScreen implements Screen {
@@ -27,7 +25,7 @@ public class AbstractScreen implements Screen {
 
 	int buttonW, buttonH, buttonSpacer;
 	int startY, xPos, yPos;
-	TextButtonStyle style;
+	TextButtonStyle style, selectedStyle;
 	LabelStyle labelStyle, labelStyle2;
 
 	StatesGame game;
@@ -37,23 +35,23 @@ public class AbstractScreen implements Screen {
 	float transitionSpeed = 1.5f;
 	
 	ScreenType screenType;
-	private Question question;
-	private String correctAnswer;
 	
 	public AbstractScreen(StatesGame game) {
 		this.game = game;
 
 		this.style = new TextButtonStyle();
-		this.labelStyle = new LabelStyle();
-		this.labelStyle2 = new LabelStyle();
-
 		style.font = StatesGame.font;
-		Color color = new Color(255, 0, 0, transitionSpeed);
 		style.fontColor = Color.ORANGE;
 
+		this.selectedStyle = new TextButtonStyle();
+		selectedStyle.font = StatesGame.font;
+		selectedStyle.fontColor = Color.GRAY;
+
+		this.labelStyle = new LabelStyle();
 		labelStyle.font = StatesGame.font;
 		labelStyle.fontColor = Color.WHITE;
-
+		
+		this.labelStyle2 = new LabelStyle();
 		labelStyle2.font = StatesGame.font;
 		labelStyle2.fontColor = Color.RED;
 
@@ -145,8 +143,6 @@ public class AbstractScreen implements Screen {
 			else pos = 100;
 			image.setPosition(pos, ((h - image.getHeight() * scaleY) / 2));
 			image.setScale(scaleX, scaleY);
-
-			//image.setColor(new Color(200, 200, 200, 0.5f));
 
 			stage.addActor(image);
 		}
@@ -246,55 +242,6 @@ public class AbstractScreen implements Screen {
 				} // end for
 			}// end if
 		}
-
-	// EVENTUALLY REMOVE THIS
-		
-	public void transitionOut() {
-
-		Array<Actor> actors = this.stage.getActors();
-		Actor a;
-		
-		final int s = actors.size - 1;
-		Utils.log("TRANSITION OUT: number of actors " + s);
-		
-		if (!transitionOut) {
-			for (int i = 0; i < actors.size; i++) {
-				a = actors.get(i);
-				final int j = i;
-
-				// These shouldn't be here, only b/c we need a's x and Y
-				// position
-				Action fadeOut = Actions.fadeOut(transitionSpeed);
-				Action slideLeft = Actions.moveTo((0 - 2000), a.getY(),
-						transitionSpeed);
-				Action slideDown = Actions.moveTo(a.getX(), (0 - 1000),
-						transitionSpeed);
-
-				// Don't transition background, Home, or Top Text
-				if (a.getName() == "background" || a.getName() == "home" || a.getName() == "topText") {
-
-				} else {
-					Action transitionEffect = fadeOut;
-					a.addAction(Actions.sequence(transitionEffect,
-							Actions.run(new Runnable() {
-
-								public void run() {
-									if (j == s) {
-										// System.out.println(
-										// "Action complete!");
-										//if (screen != null) {
-											// This calls Levelscreen constructor
-											//game.setScreen(screen);
-											Utils.log("fully transitioned out");
-										//}
-
-									}
-								}
-							}))); // end of addAction
-				}
-			} // end for
-		}// end if
-	}
 
 	@Override
 	public void hide() {
