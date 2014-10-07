@@ -14,7 +14,9 @@ public class MainMenuScreen extends AbstractScreen {
 		this.game = game;
 		this.leftImagePath = "Blank_US_Map.png";
 		this.screenType = ScreenType.MAIN;
-		this.topText = "Select game mode";
+		this.topText = "Select Game Mode";
+		//this.topText = "W: " + this.game.WINDOW_WIDTH + " H: " + this.game.WINDOW_HEIGHT;
+		
 	}
 
 	@Override
@@ -37,7 +39,8 @@ public class MainMenuScreen extends AbstractScreen {
 		buttons = new String[] { "Capitals", "States" };
 		buttonW = 100;
 		buttonH = 50;
-		buttonSpacer = 25;
+		if (this.game.n7) buttonSpacer = 50;
+		else buttonSpacer = 25;
 
 		final AbstractScreen screen = this;
 		

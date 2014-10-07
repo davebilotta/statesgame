@@ -32,7 +32,7 @@ public class AbstractScreen implements Screen {
 	String topText, topText2;
 	boolean correct = false;
 	boolean transitionOut = false;
-	float transitionSpeed = 1.5f;
+	float transitionSpeed = 1.0f;
 	
 	ScreenType screenType;
 	
@@ -53,9 +53,8 @@ public class AbstractScreen implements Screen {
 		
 		this.labelStyle2 = new LabelStyle();
 		labelStyle2.font = StatesGame.font;
-		labelStyle2.fontColor = Color.RED;
+		labelStyle2.fontColor = Color.LIGHT_GRAY;
 
-		
 		buttonW = 100;
 		buttonH = 50;
 		buttonSpacer = 25;
@@ -100,8 +99,11 @@ public class AbstractScreen implements Screen {
 
 	public void buildTopText() {
 		Label topText = new Label(this.topText, labelStyle);
-		// TODO: Fix this
-		int textHeight = 80;
+		
+		int textHeight;
+		
+		if (this.game.n7) textHeight = 120;
+		else textHeight = 80;
 		int leftOffset = 10;
 
 		topText.setBounds(leftOffset, (h - textHeight), w, textHeight);

@@ -126,10 +126,14 @@ public class LevelScreen extends AbstractScreen {
 	// Menu buttons - Home, etc.
 	@Override
 	public void buildMenuButtons() {
-		Image homeButton = new Image(new Texture("arrow.png"));
+		
+		//Image homeButton = new Image(new Texture("arrow.png"));
+		Image homeButton = new Image(new Texture("ic_action_back.png"));
 
-		int buttonW = 80;
-		int buttonH = 80;
+		int buttonW,buttonH;
+		if (this.game.n7) buttonW = buttonH = 96;  
+		else buttonW = buttonH = 80;
+		
 		homeButton.setWidth(buttonW);
 		homeButton.setHeight(buttonH);
 		homeButton.setName("home");
@@ -147,7 +151,7 @@ public class LevelScreen extends AbstractScreen {
 		});
 
 		// TODO: Fix this offset
-		homeButton.setPosition(0, h - buttonH);
+		homeButton.setPosition(0, (float) (h - (buttonH * 1.15)));
 		stage.addActor(homeButton);
 
 	}
@@ -168,7 +172,8 @@ public class LevelScreen extends AbstractScreen {
 
 		buttonW = 100;
 		buttonH = 50;
-		buttonSpacer = 25;
+		if (this.game.n7) buttonSpacer = 50;
+		else buttonSpacer = 25;
 
 		// now position on screen
 		int bTotal = (4 * buttonH) + (2 * buttonSpacer); // total space the
@@ -202,10 +207,7 @@ public class LevelScreen extends AbstractScreen {
 						correctGuess(tp);
 					else
 						incorrectGuess(actor);
-					//actor.setPosition(x, y);
-					//actor.setColor(Color.RED);
-
-					return true;
+						return true;
 				}
 			});
 

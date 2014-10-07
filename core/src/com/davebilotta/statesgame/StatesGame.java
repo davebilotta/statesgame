@@ -17,7 +17,9 @@ public class StatesGame extends Game {
 	
     public static int WINDOW_WIDTH, WINDOW_HEIGHT;
     public static float SCALE_X,SCALE_Y;
-
+    
+    boolean n7;    // Flag that we're on nexus 7 or larger
+    
 	static BitmapFont smallFont,font, largeFont, scoreFont;
 	static Texture bkg;
 	
@@ -33,23 +35,33 @@ public class StatesGame extends Game {
 		WINDOW_WIDTH = Gdx.graphics.getWidth();
 		WINDOW_HEIGHT = Gdx.graphics.getHeight();
 		
-		
-		
 		State.initStates();
-		initFonts();
+		initFonts(this);
 		bkg = new Texture("chalkboard-green.jpg");
 		
 		setScreen(new MainMenuScreen(this));
 	}		
 	
-	public static void initFonts() {
+	public static void initFonts(StatesGame game) {
 				
 		FileHandle fontFile = Gdx.files.internal("fonts/Bevan.ttf");
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
 
-		smallFont = generator.generateFont(15);
-		font = generator.generateFont(30);
-		largeFont = generator.generateFont(48);
+		// Nexus 7 is 1280 x 736
+		if (WINDOW_WIDTH >= 1280 && WINDOW_HEIGHT >= 736) {	
+			game.n7 = true;
+			
+			smallFont = generator.generateFont(30);
+			font = generator.generateFont(45);
+			largeFont = generator.generateFont(64);
+		}
+		else {
+			smallFont = generator.generateFont(15);
+			font = generator.generateFont(30);
+			largeFont = generator.generateFont(48);
+		}
+		
+		// This is the same for all devices
 		scoreFont = generator.generateFont(200);
 		
 		generator.dispose();
