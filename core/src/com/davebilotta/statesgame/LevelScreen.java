@@ -41,9 +41,10 @@ public class LevelScreen extends AbstractScreen {
 
 		if (type == QuestionType.FACTSLEVEL) this.levelSize = 100;
 		else this.levelSize = 50;
+		//Re-enable this to test particular state 
+		//else this.levelSize = 1;
 		
 		buildQuestions(type);
-		Utils.log("Constructor - get next question");
 		getNextQuestion(type);
 
 	}
@@ -55,10 +56,8 @@ public class LevelScreen extends AbstractScreen {
 		this.questionGuesses = 0;
 
 		counter++;
-		Utils.log("Number " + (counter + 1) + " of " + this.levelSize);
-
+		
 		if (counter == this.levelSize) {
-			Utils.log("Total Score is: " + totalScore);
 			counter = 0;
 			this.stage.getActors().clear();
 			this.stage.clear();
@@ -112,9 +111,7 @@ public class LevelScreen extends AbstractScreen {
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
 		super.show();
-		// Utils.log("Level screen show");
 	}
 
 	@Override
@@ -182,8 +179,6 @@ public class LevelScreen extends AbstractScreen {
 		yPos = startY;
 		xPos = 512 + (w - 512 - buttonW) / 2;
 
-		// Utils.log("the correct answer is " + this.correctAnswer);
-
 		for (int i = 0; i < buttons.length; i++) {
 			button = new TextButton(buttons[i], style);
 			button.setWidth(buttonW);
@@ -238,8 +233,6 @@ public class LevelScreen extends AbstractScreen {
 		}
 
 		transitionOut(this);
-
-		Utils.log("Total score is " + totalScore + "; calling next question");
 		getNextQuestion(tp);
 
 	}

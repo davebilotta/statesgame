@@ -15,43 +15,21 @@ public class Question {
 
 	private static final int NUM_CHOICES = 3;
 	
-	public Question(QuestionType type) {
-		this.questionType = type;
-		buildChoices();
-	}
-	
 	public Question(QuestionType type, int id) {
 		this.questionType = type;
 		buildChoices(id);
 	}
 
-	public void buildChoices() {
-		this.choices = new State[NUM_CHOICES];
-		
-		switch (questionType) {
-			case STATELEVEL:
-				// TODO: This is the same as buildCapitalChoices
-				buildStateChoices();
-				break;
-			case CAPITALLEVEL:
-				buildCapitalChoices();
-				break;
-			case FACTSLEVEL:
-				buildFactChoices();
-				break;
-			}
-	}
-	
 	public void buildChoices(int id) {
 		this.choices = new State[NUM_CHOICES];
 		
 		switch (questionType) {
 			case STATELEVEL:
 				// TODO: This is the same as buildCapitalChoices - consolidate this
-				buildStateChoices(id);
+				buildStateCapitalChoices(id);
 				break;
 			case CAPITALLEVEL:
-				buildCapitalChoices(id);
+				buildStateCapitalChoices(id);
 				break;
 			case FACTSLEVEL:
 				buildFactChoices(id);
@@ -67,44 +45,11 @@ public class Question {
 		
 	}
 
-	// Old way
-	public void buildStateChoices() {
-		// add answer into list of choices
-		// For this level type, choices are State names 
+	public void buildStateCapitalChoices(int id) {
+		// This is called in State and Capital modes 
+		//Re-enable this to test particular state 
+		//State st = StatesGame.states[25];
 		
-		State st = getOneState();
-		
-		Utils.log("State is " + st);
-		int c = 0;
-		
-		// add 2 other random states
-		for (int j = 0; j < NUM_CHOICES; j++) {
-			boolean done = false;
-		
-			while (!done) {
-				boolean ok = true;
-			
-				st = getOneState();
-				for (int i = 0; i < choices.length; i++) {
-					//if (st.getName() == choices[i]) {
-					if (st == choices[i]) {
-						ok = false;
-					}
-				}
-				if (ok) done = true;
-			}
-			choices[j] = st;
-		} // end for
-		
-		int a = (int) Math.round(Math.floor(Math.random() * 3));
-		this.answer = choices[a];
-				
-	}
-	
-	// New way	
-	public void buildStateChoices(int id) {
-		// add answer into list of choices
-		// For this level type, choices are State names 
 		State st = StatesGame.states[id];
 		
 		choices[0] = st;
@@ -129,6 +74,10 @@ public class Question {
 		// Rearrange button choices so answer isn't always in the same position
 		choices = shuffleStates(choices);
 				
+	}
+		
+	public void buildFactChoices(int id) {
+
 	}
 	
 	public State[] shuffleStates (State[] arr) { 
@@ -147,76 +96,6 @@ public class Question {
 		
 		return s;
 		
-	}
-	
-	// Old way
-	public void buildCapitalChoices() {
-		// add answer into list of choices
-		// For this level type, choices are State names 
-		
-		State st = getOneState();
-		int c = 0;
-		
-		// add 2 other random states
-		for (int j = 0; j < NUM_CHOICES; j++) {
-			boolean done = false;
-		
-			while (!done) {
-				boolean ok = true;
-			
-				st = getOneState();
-				for (int i = 0; i < choices.length; i++) {
-					if (st == choices[i]) {
-						ok = false;
-					}
-				}
-				if (ok) done = true;
-			}
-			choices[j] = st;
-		} // end for
-				
-		int a = (int) Math.round(Math.floor(Math.random() * 3));
-		this.answer = choices[a];
-		
-		
-	}
-	
-	// New way way
-	public void buildCapitalChoices(int id) {
-		// add answer into list of choices
-		// For this level type, choices are State names 
-		State st = StatesGame.states[id];
-		
-		choices[0] = st;
-		this.answer = st;
-		
-		for (int j = 1; j < NUM_CHOICES;j++) {
-		boolean done = false;
-		while (!done) {
-			boolean ok = true;
-		
-			st = getOneState();
-			for (int i = 0; i < choices.length; i++) {
-				if (st == choices[i]) {
-					ok = false;
-				}
-			}
-			if (ok) done = true;
-		}
-		choices[j] = st;
-		}
-
-		// Rearrange button choices so answer isn't always in the same position
-		choices = shuffleStates(choices);
-				
-	}
-	
-	public void buildFactChoices() {
-
-	}
-	
-	public void buildFactChoices(int id) {
-
 	}
 
 	public String[] getCapitalNames() {

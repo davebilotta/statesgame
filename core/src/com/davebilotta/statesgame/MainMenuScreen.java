@@ -12,7 +12,8 @@ public class MainMenuScreen extends AbstractScreen {
 		super(game);
 		// TODO Auto-generated constructor stub
 		this.game = game;
-		this.leftImagePath = "Blank_US_Map.png";
+		//this.leftImagePath = "Blank_US_Map.png";
+		this.leftImagePath = "us.png";
 		this.screenType = ScreenType.MAIN;
 		this.topText = "Select Game Mode";
 		//this.topText = "W: " + this.game.WINDOW_WIDTH + " H: " + this.game.WINDOW_HEIGHT;

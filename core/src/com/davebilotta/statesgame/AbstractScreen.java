@@ -160,11 +160,15 @@ public class AbstractScreen implements Screen {
 			scale = 1.0f;
 			return scale;
 		} 
-		if ((image.getWidth() > 1000) || (image.getHeight() > 1000)) {
+		if ((image.getWidth() > 1200) || (image.getHeight() > 1200)) {
 			scale = 0.25f;
 			return scale;
 		}
 		else {
+			if ((image.getWidth() > 1000) || (image.getHeight() > 1000)) {
+				scale = 0.33f;
+				return scale;
+			}
 			if ((image.getWidth() > 900) || (image.getHeight() > 900)) {
 				scale = 0.40f;
 				return scale;
@@ -212,7 +216,6 @@ public class AbstractScreen implements Screen {
 			Actor a;
 			
 			final int s = actors.size - 1;
-			Utils.log("TRANSITION OUT: number of actors " + s);
 			
 			if (!transitionOut) {
 				for (int i = 0; i < actors.size; i++) {
@@ -247,7 +250,8 @@ public class AbstractScreen implements Screen {
 
 	@Override
 	public void hide() {
-
+		this.stage.dispose();
+		this.stage.getActors().clear();
 	}
 
 	public void buildButtons() {

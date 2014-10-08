@@ -10,11 +10,10 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 
 public class StatesGame extends Game {
-	public static final boolean DEBUG = true;
+	public static final boolean DEBUG = false;  // enable this to turn on debugging in Console
 	SpriteBatch batch;
 	static State[] states;
-	GameController controller;
-	
+		
     public static int WINDOW_WIDTH, WINDOW_HEIGHT;
     public static float SCALE_X,SCALE_Y;
     
