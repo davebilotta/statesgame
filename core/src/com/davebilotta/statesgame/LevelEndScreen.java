@@ -85,7 +85,11 @@ public class LevelEndScreen implements Screen {
 		LabelStyle style = new LabelStyle();
 		style.font = StatesGame.font;
 		style.fontColor = Color.RED;
-		int textHeight = 80;
+		int textHeight;
+		
+		if (this.game.n7) textHeight = 120;
+		else textHeight = 80;
+
 		int leftOffset = 10;
 
 		// * Top Text */
@@ -104,7 +108,11 @@ public class LevelEndScreen implements Screen {
 		LabelStyle style = new LabelStyle();
 		style.font = StatesGame.font;
 		style.fontColor = Color.WHITE;
-		int textHeight = 80;
+		int textHeight;
+		
+		if (this.game.n7) textHeight = 120;
+		else textHeight = 80;
+		
 		int leftOffset = 10;
 
 		String text = calculateLevelTwoText(ratio);
