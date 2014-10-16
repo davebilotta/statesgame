@@ -10,8 +10,15 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		new LwjglApplication(new StatesGame(), config);
 		
-		config.width = 800;
-        config.height = 600;
+		//config.width = 800;
+        //config.height = 600;
    
+		//config.width = 1280;
+		//config.height = 800;
+		
+        // Nexus 5
+		config.width = 1080;
+        config.height = 1980;
+        
 	}
 }

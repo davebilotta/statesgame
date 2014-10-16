@@ -3,6 +3,7 @@ package com.davebilotta.statesgame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -13,7 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.davebilotta.statesgame.StatesGame.ScreenType;
 
 public class AbstractScreen implements Screen {
@@ -63,7 +66,8 @@ public class AbstractScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-
+//		stage.getViewport().update(width,height,false);
+		System.out.println("RESIZE");
 	}
 
 	@Override
@@ -71,9 +75,24 @@ public class AbstractScreen implements Screen {
 		transitionOut = false;
 		w = Gdx.graphics.getWidth();
 		h = Gdx.graphics.getHeight();
-
+		
+		//stage = new Stage(new ScreenViewport());
+		//stage.getViewport().update(w, h, true);
+		//if (h > 1600) { 
+		//	w = 1280;
+		//	h = 800;
+		//}
+				
+		/*float height = 20;
+		float ppu = h/ height;
+		float width = w / ppu;		
+		
+		OrthographicCamera cam = new OrthographicCamera (width,height);
+		cam.position.set(width/2,height/2,0);
+		cam.update(); */
+		
+		//stage = new Stage(new StretchViewport(1280,800));
 		stage = new Stage(new ScreenViewport());
-		stage.getViewport().update(w, h, true);
 		stage.clear();
 		Gdx.input.setInputProcessor(stage);
 

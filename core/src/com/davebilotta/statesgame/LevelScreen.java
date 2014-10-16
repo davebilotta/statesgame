@@ -40,7 +40,7 @@ public class LevelScreen extends AbstractScreen {
 		this.totalScore = 0;
 
 		if (type == QuestionType.FACTSLEVEL) this.levelSize = 100;
-		else this.levelSize = 1;
+		else this.levelSize = 50;
 		//Re-enable this to test particular state 
 		//else this.levelSize = 1;
 		
